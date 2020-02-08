@@ -1,0 +1,49 @@
+{
+  "name": "1dv023_examination_2",
+  "version": "1.0.0",
+  "description": "Examination 2 on 1DV023 at Linnéuniversitetet in Sweden",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js $*",
+    "lint": ".\\node_modules\\.bin\\eslint . || exit 0"
+  },
+  "eslintConfig": {
+    "extends": "@lnu"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RMarjanovic/-1DV023_Examination_2.git"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-hbs": "^2.3.0",
+    "express-session": "^1.17.0",
+    "http-errors": "^1.7.3",
+    "mongoose": "^5.8.11",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.0.6",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsdoc": "^20.3.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  },
+  "keywords": [
+    "CRUD",
+    "Controller",
+    "Database",
+    "mongoDB",
+    "Node.js",
+    "Express"
+  ],
+  "author": "Rickard Marjanovic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RMarjanovic/-1DV023_Examination_2/issues"
+  },
+  "homepage": "https://github.com/RMarjanovic/-1DV023_Examination_2#readme"
+}
