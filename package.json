@@ -15,6 +15,7 @@
     "url": "git+https://github.com/RMarjanovic/-1DV023_Examination_2.git"
   },
   "dependencies": {
+    "dotenv-extended": "^2.7.1",
     "express": "^4.17.1",
     "express-hbs": "^2.3.0",
     "express-session": "^1.17.0",

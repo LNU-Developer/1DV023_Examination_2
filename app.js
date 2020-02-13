@@ -7,18 +7,28 @@
 
 'use strict'
 
+require('dotenv').config()
+
 const express = require('express')
 const hbs = require('express-hbs')
 const { join } = require('path')
 const logger = require('morgan')
 const createError = require('http-errors')
-
+const mongoose = require('./configs/mongoose.js')
 const app = express()
+
+// Connect to the database.
+mongoose.connect().catch(error => {
+  console.error(error)
+  process.exit(1)
+})
 
 // View engine.
 app.engine('hbs', hbs.express4({
-  defaultLayout: join(__dirname, 'views', 'layouts', 'default')
+  defaultLayout: join(__dirname, 'views', 'layouts', 'default'),
+  partialsDir: join(__dirname, 'views', 'partials')
 }))
+
 app.set('view engine', 'hbs')
 app.set('views', join(__dirname, 'views'))
 
