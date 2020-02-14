@@ -1,1 +1,23 @@
 <h2>Code snippets</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if viewData.users.length}}
+    {{#each viewData.users}}
+    <tr>
+        <td>{{this.username}}</td>
+        <th>{{this.createdAt}}</th>
+    </tr>
+    {{/each}}
+    {{else}}
+    <tr>
+      <td>No snippets have been created.</td>
+    </tr>
+  {{/if}}
+  </tbody>
+</table>

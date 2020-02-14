@@ -11,11 +11,11 @@ const index = (req, res) => {
   res.render('home/index')
 }
 
-const login = (req, res) => {
-  res.render('home/login')
+const signup = (req, res) => {
+  res.render('home/signup')
 }
 
 module.exports = {
   index,
-  login
+  signup
 }
