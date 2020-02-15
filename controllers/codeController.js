@@ -19,25 +19,24 @@ const moment = require('moment')
  */
 codeController.index = async (req, res, next) => {
   try {
-    const { userId } = req.session
-    console.log(userId)
+    const userId = req.session.userId
     const viewData = {
       snippets: (await Snippet.find({}))
         .map(snippet => ({
           id: snippet._id,
-          createdAt: moment(snippet.createdAt).fromNow(),
           usernameId: snippet.usernameId,
+          createdAt: moment(snippet.createdAt).fromNow(),
           snippet: snippet.snippet
         }))
         .sort((a, b) => a.createdAt - b.createdAt)
     }
-    res.render('home/index', { viewData })
+    res.render('home/index', { viewData, userId })
   } catch (error) {
     next(error)
   }
 }
 
-codeController.create = async (req, res) => {
+codeController.create = async (req, res) => { // TODO: redirect if not logged in
   try {
     // Create a new snippet...
     const snippet = new Snippet({
@@ -52,8 +51,8 @@ codeController.create = async (req, res) => {
     res.redirect('/')
   } catch (error) {
     // If an error, or validation error, occurred, view the form and an error message.
-    req.session.flash = { type: 'fail', text: error }
-    return res.redirect('/new')
+    req.session.flash = { type: 'fail', text: error.message }
+    res.redirect('/new')
   }
 }
 
@@ -64,11 +63,41 @@ codeController.create = async (req, res) => {
  * @param {object} res - Express response object.
  */
 codeController.new = (req, res) => {
-  res.render('home/new')
+  const userId = req.session.userId
+  res.render('home/new', { userId })
 }
 
+/**
+ * Returns a HTML form for signing up.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 codeController.signup = (req, res) => {
-  res.render('home/signup')
+  const userId = req.session.userId
+  res.render('home/signup', { userId })
+}
+
+/**
+ * Returns a HTML form for logging out.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
+codeController.logout = (req, res) => {
+  const userId = req.session.userId
+  res.render('home/login', { userId })
+}
+
+/**
+ * Returns a HTML form for logging in.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
+codeController.login = (req, res) => {
+  const userId = req.session.userId
+  res.render('home/login', { userId })
 }
 
 module.exports = codeController

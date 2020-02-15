@@ -13,16 +13,22 @@ const router = express.Router()
 const codeController = require('../controllers/codeController')
 const userController = require('../controllers/userController')
 
+// Get home
 router.get('/', codeController.index)
-router.get('/signup', codeController.signup)
 
+// Get signup page and create new user
+router.get('/signup', codeController.signup)
+router.post('/signup/create', userController.create)
+
+// Get new snippet page and create new snippet
 router.get('/new', codeController.new)
 router.post('/new', codeController.new)
 
 router.post('/new/snippet', codeController.create)
 
-router.post('/login/create', userController.create)
-router.post('logout', userController.logout)
-router.post('login', userController.login)
+router.get('/logout', userController.logout)
+
+router.get('/login', codeController.login)
+router.post('/login', userController.login)
 
 module.exports = router

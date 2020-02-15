@@ -29,7 +29,6 @@ userController.create = async (req, res) => {
 
     // Save the user ID of the logged in user to session
     req.session.userId = data[0]._id
-
     // ...and redirect and show a message.
     req.session.flash = { type: 'success', text: 'The user was created successfully, you are logged in.' }
     res.redirect('/')
@@ -37,24 +36,43 @@ userController.create = async (req, res) => {
     // If an error, or validation error, occurred, view the form and an error message.
     if (error.code === 11000) {
       req.session.flash = { type: 'fail', text: 'User already exist, please try another username' }
+    } else {
+      req.session.flash = { type: 'fail', text: error.message }
     }
     return res.redirect('/signup')
   }
 }
 
-userController.logout = (req, res) => { // TODO: destroy session
+userController.logout = (req, res) => {
   // TODO: redirect to protection layer (check if user is logged in)
-
+  req.session.destroy(() => {
+    res.redirect('/')
+  })
 }
 
 /**
- * Creates login a user.
+ * Login a user.
  *
  * @param {object} req - Express request object.
  * @param {object} res - Express response object.
  */
-userController.login = (req, res) => { // TODO: Create login session
+userController.login = async (req, res) => { // TODO: Create login session
 // TODO: redirect to protection layer (check if user is logged in)
+  try {
+    const data = await User.find({ username: req.body.username })
+    if (data[0].password === req.body.password) {
+      req.session.userId = data[0]._id
+      req.session.flash = { type: 'success', text: 'Login successful' }
+      res.redirect('/')
+    } else {
+      req.session.flash = { type: 'fail', text: 'Username and/or password was incorrect' }
+      res.redirect('/login')
+    }
+  } catch (error) {
+  // If an error, or validation error, occurred, view the form and an error message.
+    req.session.flash = { type: 'fail', text: error.message }
+    return res.redirect('/login')
+  }
 }
 
 module.exports = userController
