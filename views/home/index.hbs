@@ -1,17 +1,28 @@
 <h2>Code snippets</h2>
+
+<form method="post" action="/new/">
+  <button type="submit">Create a snippet</button>
+</form>
+
 <table>
   <thead>
     <tr>
-      <th>Username</th>
+      <th>Snippet</th>
       <th>Created</th>
     </tr>
   </thead>
   <tbody>
-    {{#if viewData.users.length}}
-    {{#each viewData.users}}
+    {{#if viewData.snippets.length}}
+    {{#each viewData.snippets}}
     <tr>
-        <td>{{this.username}}</td>
-        <th>{{this.createdAt}}</th>
+        <td>{{this.snippet}}</td> 
+        <td>{{this.createdAt}}</td>
+        <td><form method="post" action="/placeholder/{{this.id}}/">
+          <button type="submit">Delete</button>
+        </form></td>
+        <td><form method="post" action="/placeholder/{{this.id}}/">
+          <button type="submit">Edit</button>
+        </form></td>
     </tr>
     {{/each}}
     {{else}}
