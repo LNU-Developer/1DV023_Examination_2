@@ -25,9 +25,13 @@ userController.create = async (req, res) => {
     })
     // ...save the number to the database...
     await user.save()
+    const data = await User.find({ username: req.body.username })
+
+    // Save the user ID of the logged in user to session
+    req.session.userId = data[0]._id
 
     // ...and redirect and show a message.
-    req.session.flash = { type: 'success', text: 'The user was created successfully.' }
+    req.session.flash = { type: 'success', text: 'The user was created successfully, you are logged in.' }
     res.redirect('/')
   } catch (error) {
     // If an error, or validation error, occurred, view the form and an error message.
@@ -43,6 +47,12 @@ userController.logout = (req, res) => { // TODO: destroy session
 
 }
 
+/**
+ * Creates login a user.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 userController.login = (req, res) => { // TODO: Create login session
 // TODO: redirect to protection layer (check if user is logged in)
 }

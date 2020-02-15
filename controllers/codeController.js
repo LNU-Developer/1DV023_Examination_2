@@ -19,15 +19,17 @@ const moment = require('moment')
  */
 codeController.index = async (req, res, next) => {
   try {
+    const { userId } = req.session
+    console.log(userId)
     const viewData = {
       snippets: (await Snippet.find({}))
         .map(snippet => ({
           id: snippet._id,
           createdAt: moment(snippet.createdAt).fromNow(),
-          // username: snippet.username,
+          usernameId: snippet.usernameId,
           snippet: snippet.snippet
         }))
-        .sort((a, b) => a.username - b.username)
+        .sort((a, b) => a.createdAt - b.createdAt)
     }
     res.render('home/index', { viewData })
   } catch (error) {
@@ -39,7 +41,7 @@ codeController.create = async (req, res) => {
   try {
     // Create a new snippet...
     const snippet = new Snippet({
-      // username: req.body.username,
+      usernameId: req.session.userId,
       snippet: req.body.snippet
     })
     // ...save the snippet to the database...

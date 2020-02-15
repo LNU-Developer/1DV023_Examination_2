@@ -12,10 +12,10 @@ const Schema = mongoose.Schema
 
 // Create a schema, with customized error messages.
 const snippetSchema = new Schema({
-  // username: {              // TODO: needs to save a username
-  // type: String,
-  // required: true
-  // },
+  usernameId: {
+    type: String,
+    required: true
+  },
   snippet: {
     type: String,
     required: true
