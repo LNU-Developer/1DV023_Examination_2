@@ -101,4 +101,7 @@ codeController.login = (req, res) => {
   res.render('snippet/login', { userId })
 }
 
+// TODO: create cases for edit and delete
+// TODO: throw 403 if user tries to access these without auth
+
 module.exports = codeController
