@@ -31,13 +31,13 @@ codeController.index = async (req, res, next) => {
         }))
         .sort((a, b) => a.createdAt - b.createdAt)
     }
-    res.render('snippet/index', { viewData, userId }) // TODO: Fix better middleware to check on every req if user is logged in
+    res.render('snippet/index', { viewData, userId }) // TODO: QUESTION: How to fix better middleware to check on every req if user is logged in so it doesnt need to get pushed into every HBS?
   } catch (error) {
     next(error)
   }
 }
 
-codeController.create = async (req, res) => { // TODO: redirect if not logged in
+codeController.create = async (req, res) => {
   try {
     // Create a new snippet...
     const snippet = new Snippet({
@@ -101,8 +101,6 @@ codeController.login = (req, res) => {
   res.render('snippet/login', { userId })
 }
 
-// TODO: create cases for edit and delete
-
 /**
  * Edit a snippet.
  *
@@ -127,7 +125,7 @@ codeController.show = async (req, res, next) => {
     } else {
       const dataId = req.params.id
       const text = data[0].snippet
-      res.render('snippet/edit', { dataId, text, userId }) // TODO: Fix better middleware to check on every req if user is logged in
+      res.render('snippet/edit', { dataId, text, userId })
     }
   } catch (error) {
     next(error)
@@ -163,14 +161,14 @@ codeController.edit = async (req, res, next) => {
       } else {
         req.session.flash = { type: 'fail', text: 'The snippet you tried to update, was removed by another user' }
       }
-      res.redirect('/') // TODO: Fix better middleware to check on every req if user is logged in
+      res.redirect('/')
     }
   } catch (error) {
     next(error)
   }
 }
 
-// TODO: QUESTION, why doesn't my error codes work? throw 403 if user tries to access these without auth
+// TODO: QUESTION, why doesn't my error codes work? throw 403 if user tries to access these without auth (remove redirects to reproduce errors)
 
 /**
  * Delete a snippet.
@@ -196,7 +194,7 @@ codeController.delete = async (req, res, next) => {
     } else {
       await Snippet.deleteOne({ _id: req.params.id })
       req.session.flash = { type: 'success', text: 'The snippet was deleted successfully.' }
-      res.redirect('/') // TODO: Fix better middleware to check on every req if user is logged in
+      res.redirect('/')
     }
   } catch (error) {
     next(error)

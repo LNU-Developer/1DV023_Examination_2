@@ -44,9 +44,7 @@ userController.create = async (req, res) => {
 }
 
 userController.logout = (req, res) => {
-  // TODO: redirect to protection layer (check if user is logged in)
   req.session.destroy(() => {
-    req.session.flash = { type: 'success', text: 'Logout successful' }
     res.redirect('/')
   })
 }
@@ -58,7 +56,6 @@ userController.logout = (req, res) => {
  * @param {object} res - Express response object.
  */
 userController.login = async (req, res) => {
-// TODO: redirect to protection layer (check if user is logged in)
   try {
     const data = await User.find({ username: req.body.username })
     if (data[0].password === req.body.password) {
