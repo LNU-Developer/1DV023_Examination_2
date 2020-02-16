@@ -26,11 +26,12 @@ codeController.index = async (req, res, next) => {
           id: snippet._id,
           usernameId: snippet.usernameId,
           createdAt: moment(snippet.createdAt).fromNow(),
-          snippet: snippet.snippet
+          snippet: snippet.snippet,
+          userId: userId
         }))
         .sort((a, b) => a.createdAt - b.createdAt)
     }
-    res.render('home/index', { viewData, userId })
+    res.render('snippet/index', { viewData, userId })
   } catch (error) {
     next(error)
   }
@@ -64,7 +65,7 @@ codeController.create = async (req, res) => { // TODO: redirect if not logged in
  */
 codeController.new = (req, res) => {
   const userId = req.session.userId
-  res.render('home/new', { userId })
+  res.render('snippet/new', { userId })
 }
 
 /**
@@ -75,7 +76,7 @@ codeController.new = (req, res) => {
  */
 codeController.signup = (req, res) => {
   const userId = req.session.userId
-  res.render('home/signup', { userId })
+  res.render('snippet/signup', { userId })
 }
 
 /**
@@ -86,7 +87,7 @@ codeController.signup = (req, res) => {
  */
 codeController.logout = (req, res) => {
   const userId = req.session.userId
-  res.render('home/login', { userId })
+  res.render('snippet/login', { userId })
 }
 
 /**
@@ -97,7 +98,7 @@ codeController.logout = (req, res) => {
  */
 codeController.login = (req, res) => {
   const userId = req.session.userId
-  res.render('home/login', { userId })
+  res.render('snippet/login', { userId })
 }
 
 module.exports = codeController

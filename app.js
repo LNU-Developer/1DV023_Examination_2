@@ -24,6 +24,16 @@ mongoose.connect().catch(error => {
   process.exit(1)
 })
 
+// Register own helper for if
+hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
+  switch (operator) {
+    case '===':
+      return (v1 === v2) ? options.fn(this) : options.inverse(this)
+    default:
+      return options.inverse(this)
+  }
+})
+
 // View engine.
 app.engine('hbs', hbs.express4({
   defaultLayout: join(__dirname, 'views', 'layouts', 'default'),

@@ -56,7 +56,7 @@ userController.logout = (req, res) => {
  * @param {object} req - Express request object.
  * @param {object} res - Express response object.
  */
-userController.login = async (req, res) => { // TODO: Create login session
+userController.login = async (req, res) => {
 // TODO: redirect to protection layer (check if user is logged in)
   try {
     const data = await User.find({ username: req.body.username })

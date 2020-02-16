@@ -1,9 +1,4 @@
 <h2>Code snippets</h2>
-
-<form method="post" action="/new/">
-  <button type="submit">Create a snippet</button>
-</form>
-
 <table>
   <thead>
     <tr>
@@ -17,13 +12,14 @@
     <tr>
         <td>{{this.snippet}}</td> 
         <td>{{this.createdAt}}</td>
-        <td>{{this.usernameId}}</td>
-        <td><form method="post" action="/placeholder/{{this.id}}/">
-          <button type="submit">Delete</button>
-        </form></td>
-        <td><form method="post" action="/placeholder/{{this.id}}/">
+        {{#ifCond this.usernameId "===" this.userId}}
+        <td><form method="post" action="/{{this.id}}/edit/">
           <button type="submit">Edit</button>
         </form></td>
+        <td><form method="post" action="/{{this.id}}/delete/">
+          <button type="submit">Delete</button>
+        </form></td>
+        {{/ifCond}}
     </tr>
     {{/each}}
     {{else}}
@@ -33,3 +29,8 @@
   {{/if}}
   </tbody>
 </table>
+{{#if userId}}
+<form method="post" action="/new/">
+  <button type="submit">Create a snippet</button>
+</form>
+{{/if}}
