@@ -13,7 +13,7 @@
         <td><pre>{{this.snippet}}</pre></td> <!-- TODO: fix CSS instead of pre. -->
         <td><pre>{{this.createdAt}}</pre></td>
         {{#ifCond this.usernameId "===" this.userId}}
-        <td><form method="post" action="/{{this.id}}/edit/">
+        <td><form method="post" action="/{{this.id}}/">
           <button type="submit">Edit</button>
         </form></td>
         <td><form method="post" action="/{{this.id}}/delete/">

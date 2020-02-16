@@ -95,6 +95,13 @@ app.use((err, req, res, next) => {
       .sendFile(join(__dirname, 'views', 'errors', '404.html'))
   }
 
+  // 403 Not Found.
+  if (err.status === 403) {
+    return res
+      .status(403)
+      .sendFile(join(__dirname, 'views', 'errors', '403.html'))
+  }
+
   // 500 Internal Server Error (in production, all other errors send this response).
   if (req.app.get('env') !== 'development') {
     return res

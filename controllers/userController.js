@@ -18,7 +18,7 @@ const User = require('../models/User')
  */
 userController.create = async (req, res) => {
   try {
-    // Create a new user...
+    // Create a new user...   //TODO:Validate input to see that it contains both user and password
     const user = new User({
       username: req.body.username,
       password: req.body.password // TODO: hash password
@@ -46,6 +46,7 @@ userController.create = async (req, res) => {
 userController.logout = (req, res) => {
   // TODO: redirect to protection layer (check if user is logged in)
   req.session.destroy(() => {
+    req.session.flash = { type: 'success', text: 'Logout successful' }
     res.redirect('/')
   })
 }
@@ -70,7 +71,7 @@ userController.login = async (req, res) => {
     }
   } catch (error) {
   // If an error, or validation error, occurred, view the form and an error message.
-    req.session.flash = { type: 'fail', text: error.message }
+    req.session.flash = { type: 'fail', text: error.message } // TODO: QUESTION, how does this go to a error code? instead?
     return res.redirect('/login')
   }
 }

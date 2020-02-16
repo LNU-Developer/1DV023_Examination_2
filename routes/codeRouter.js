@@ -31,4 +31,10 @@ router.get('/logout', userController.logout)
 router.get('/login', codeController.login)
 router.post('/login', userController.login)
 
+// Edit/Delete snippet.
+router.post('/:id', codeController.show)
+router.get('/:id', codeController.show) // TODO: QUESTION: Should there be a get on this request as well?
+router.post('/:id/edit', codeController.edit)
+router.post('/:id/delete', codeController.delete)
+
 module.exports = router
