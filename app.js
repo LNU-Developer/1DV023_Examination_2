@@ -87,16 +87,16 @@ app.use('/', require('./routes/codeRouter'))
 app.use('*', (req, res, next) => next(createError(404)))
 
 // Error handler.
-app.use((err, req, res, next) => {
+app.use((error, req, res, next) => {
   // 404 Not Found.
-  if (err.status === 404) {
+  if (error.status === 404) {
     return res
       .status(404)
       .sendFile(join(__dirname, 'views', 'errors', '404.html'))
   }
 
   // 403 Not Found.
-  if (err.status === 403) {
+  if (error.status === 403) {
     return res
       .status(403)
       .sendFile(join(__dirname, 'views', 'errors', '403.html'))
@@ -114,8 +114,8 @@ app.use((err, req, res, next) => {
 
   // Render the error page.
   res
-    .status(err.status || 500)
-    .render('errors/error', { err })
+    .status(error.status || 500)
+    .render('errors/error', { error })
 })
 
 // Listen to port
