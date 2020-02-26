@@ -46,6 +46,12 @@ userController.create = async (req, res) => {
   }
 }
 
+/**
+ * Logs out the user and destroys the session cookie.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 userController.logout = (req, res) => {
   req.session.destroy(() => {
     res.redirect('/')

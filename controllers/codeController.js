@@ -31,12 +31,18 @@ codeController.index = async (req, res, next) => {
         }))
         .sort((a, b) => a.createdAt - b.createdAt)
     }
-    res.render('snippet/index', { viewData, userId }) // TODO: QUESTION: How to fix better middleware to check on every req if user is logged in so it doesnt need to get pushed into every HBS?
+    res.render('snippet/index', { viewData, userId })
   } catch (error) {
     next(error)
   }
 }
 
+/**
+ * Creates a new snippet.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 codeController.create = async (req, res) => {
   try {
     // Create a new snippet...
@@ -102,7 +108,7 @@ codeController.login = (req, res) => {
 }
 
 /**
- * Edit a snippet.
+ * Show a snippet for edit.
  *
  * @param {object} req - Express request object.
  * @param {object} res - Express response object.
@@ -115,10 +121,8 @@ codeController.show = async (req, res, next) => {
     if (!data[0]._id) { // If no data found send a 404
       const error = new Error('Not found')
       error.statusCode = 404
-      console.log('not found')
       return next(error)
     } else if (data[0].usernameId !== userId) { // If trying to change a userId that user doesn't have access to send 403
-      console.log('not auth')
       const error = new Error('Not authorized')
       error.statusCode = 403
       return next(error)
@@ -146,17 +150,14 @@ codeController.edit = async (req, res, next) => {
     if (!data[0]._id) { // If no data found send a 404
       const error = new Error('Not found')
       error.statusCode = 404
-      console.log('not found')
       return next(error)
     } else if (data[0].usernameId !== userId) { // If trying to change a userId that user doesn't have access to send 403
-      console.log('not auth')
       const error = new Error('Not authorized')
       error.statusCode = 403
       return next(error)
     } else {
       const result = await Snippet.updateOne({ _id: req.params.id }, { snippet: req.body.snippet })
       if (result.nModified === 1) {
-        console.log('success')
         req.session.flash = { type: 'success', text: 'The snippet was updated successfully.' }
       } else {
         req.session.flash = { type: 'fail', text: 'The snippet you tried to update, was removed by another user' }
@@ -167,8 +168,6 @@ codeController.edit = async (req, res, next) => {
     next(error)
   }
 }
-
-// TODO: QUESTION, why doesn't my error codes work? throw 403 if user tries to access these without auth (remove redirects to reproduce errors)
 
 /**
  * Delete a snippet.
@@ -184,10 +183,8 @@ codeController.delete = async (req, res, next) => {
     if (!data[0]._id) { // If no data found send a 404
       const error = new Error('Not found')
       error.statusCode = 404
-      console.log('not found')
       return next(error)
     } else if (data[0].usernameId !== userId) { // If trying to change a userId that user doesn't have access to send 403
-      console.log('not auth')
       const error = new Error('Not authorized')
       error.statusCode = 403
       return next(error)

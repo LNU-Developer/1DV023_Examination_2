@@ -51,7 +51,7 @@ router.post('/login', redirectSnippet, userController.login)
 
 // Edit/Delete snippet.
 router.post('/:id', redirectLogin, codeController.show)
-router.get('/:id', redirectLogin, codeController.show) // TODO: QUESTION: Should there be a get on this request as well?
+router.get('/:id', redirectLogin, codeController.show)
 router.post('/:id/edit', redirectLogin, codeController.edit)
 router.post('/:id/delete', redirectLogin, codeController.delete)
 
