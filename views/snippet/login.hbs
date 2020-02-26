@@ -1,6 +1,17 @@
-<h2>Login</h2>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+
+<h3>Login</h3>
+<div class="form-group"></div>
 <form method="post" action="/login/">
-	<input type="text" name="username" placeholder="Username" autocomplete="username" required><br><b>
-	<input type="password" name="password" placeholder="Password" autocomplete="current-password" required><br><br>
-	<input type="submit">
+	<input type="text" name="username" placeholder="Username" autocomplete="username" class="form-control" required>
+	<small id="userHelp" class="form-text text-muted">Please enter your username with at least 3 and max 10 characters.</small><br>
+	<input type="password" name="password" placeholder="Password" autocomplete="current-password" class="form-control" required>
+	<small id="passwordHelp" class="form-text text-muted">Please enter your password with at least 7 characters.</small><br>
+	<input type="submit" class="btn btn-outline-success">
 </form>
+</div>
+	</div>
+</div>
+</div>

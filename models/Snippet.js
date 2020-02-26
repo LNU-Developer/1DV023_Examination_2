@@ -18,7 +18,9 @@ const snippetSchema = new Schema({
   },
   snippet: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    minlength: 1
   }
 }, {
   timestamps: true,

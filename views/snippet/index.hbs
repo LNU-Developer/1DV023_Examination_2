@@ -1,24 +1,38 @@
-<h2>Code snippets</h2>
-<table>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+<h3>Code snippets</h3>
+{{#if userId}}
+<form method="post" action="/new/">
+  <button type="submit" class="btn btn-outline-success">Create a snippet</button> <br><br>
+</form>
+{{/if}}
+<table class = "table">
   <thead>
     <tr>
-      <th>Snippet</th>
-      <th>Created</th>
+      <th scope="col">Snippet</th>
+      <th scope="col">Created</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
     {{#if viewData.snippets.length}}
     {{#each viewData.snippets}}
     <tr>
-        <td><pre>{{this.snippet}}</pre></td> <!-- TODO: fix CSS instead of pre. -->
-        <td><pre>{{this.createdAt}}</pre></td>
+        <td><pre>{{this.snippet}}</pre></td>
+        <td>{{this.createdAt}}</td>
         {{#ifCond this.usernameId "===" this.userId}}
         <td><form method="post" action="/{{this.id}}/">
-          <button type="submit">Edit</button>
+          <button type="submit" class="btn btn-outline-warning">Edit</button>
         </form></td>
         <td><form method="post" action="/{{this.id}}/delete/">
-          <button type="submit">Delete</button>
+          <button type="submit" class="btn btn-outline-danger">Delete</button>
         </form></td>
+         {{else}}
+        <td>No access</td>
+        <td>No access</td>
         {{/ifCond}}
     </tr>
     {{/each}}
@@ -29,8 +43,7 @@
   {{/if}}
   </tbody>
 </table>
-{{#if userId}}
-<form method="post" action="/new/">
-  <button type="submit">Create a snippet</button>
-</form>
-{{/if}}
+
+    </div>
+  </div>
+</div>
