@@ -28,17 +28,7 @@ userController.create = async (req, res) => {
     })
     // ...save the number to the database...
     await user.save()
-    const data = await User.find({ username: req.body.username })
-
-    // Save the user ID of the logged in user to session
-
-    req.session.userId = data[0]._id
-    // ...and redirect and show a message.
-    req.session.flash = {
-      type: 'success',
-      text: 'The user was created successfully, you are logged in.'
-    }
-    res.redirect('/')
+    userController.login(req, res)
   } catch (error) {
     // If an error, or validation error, occurred, view the form and an error message.
     if (error.code === 11000) {
@@ -72,7 +62,7 @@ userController.login = async (req, res) => {
   try {
     const user = await User.authenticate(req.body.username.toLowerCase(), req.body.password)
     req.session.userId = user._id
-    req.session.flash = { type: 'success', text: 'Login successful' }
+    req.session.flash = { type: 'success', text: 'Login/Signup successful' }
     res.redirect('/')
   } catch (error) {
   // If an error, or validation error, occurred, view the form and an error message.
