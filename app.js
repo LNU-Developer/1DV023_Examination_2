@@ -17,12 +17,24 @@ const createError = require('http-errors')
 const mongoose = require('./configs/mongoose.js')
 const session = require('express-session')
 const app = express()
+const helmet = require('helmet')
 
 // Connect to the database.
 mongoose.connect().catch(error => {
   console.error(error)
   process.exit(1)
 })
+
+// Helmet security
+app.use(helmet())
+app.use(helmet.noCache())
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
+  }
+}))
 
 // Register own helper for if
 hbs.registerHelper('ifCond', function (v1, operator, v2, options) {

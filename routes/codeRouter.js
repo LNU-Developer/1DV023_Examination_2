@@ -15,7 +15,7 @@ const userController = require('../controllers/userController')
 
 const redirectLogin = (req, res, next) => {
   if (!req.session.userId) {
-    req.session.flash = { type: 'fail', text: 'You need to be logged in to do this action.' }
+    req.session.flash = { type: 'danger', text: 'You need to be logged in to do this action.' }
     res.redirect('/login')
   } else {
     next()
@@ -24,7 +24,7 @@ const redirectLogin = (req, res, next) => {
 
 const redirectSnippet = (req, res, next) => {
   if (req.session.userId) {
-    req.session.flash = { type: 'fail', text: 'You are already logged in.' }
+    req.session.flash = { type: 'danger', text: 'You are already logged in.' }
     res.redirect('/')
   } else {
     next()
